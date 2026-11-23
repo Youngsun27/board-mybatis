@@ -1,4 +1,4 @@
-# Board — MyBatis標準型（표준형） (Spring Boot + JSP + Oracle 11g)
+# Board — MyBatis標準型（표준형） (Spring Boot/Maven + JSP + Oracle 11g)
 
 既存の **純粋なJDBC（no bean）掲示板（게시판）** を **MyBatis標準型（표준형）** に変更したバージョンです。
 
