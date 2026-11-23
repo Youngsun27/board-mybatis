@@ -1,0 +1,48 @@
+# 서버 설정: 포트 번호 + 주소 앞부분(/biz)
+# サーバー設定：ポート番号 + アドレスの前部分（/biz）
+server:
+  port: 8080
+  servlet:
+    context-path: /biz
+
+spring:
+  # View 이름 → 실제 JSP 경로 ("list" → /WEB-INF/views/list.jsp)
+  # View名 → 実際のJSPパス（"list" → /WEB-INF/views/list.jsp）
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+  # DB 연결 정보 → Spring Boot가 이 값으로 HikariCP 커넥션 풀을 자동으로 만듦
+  # DB接続情報 → Spring Bootがこの値でHikariCPコネクションプールを自動で作る
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    # Oracle 11g 주소: 환경변수 DB_URL, 없으면 : 뒤의 기본값 사용 (XE 버전이면 orcl → xe)
+    # Oracle 11gのアドレス：環境変数 DB_URL、なければ : の後ろのデフォルト値を使用（XE版なら orcl → xe）
+    url: ${DB_URL:jdbc:oracle:thin:@localhost:1521:orcl}
+    # DB 아이디: 환경변수 DB_USERNAME, 없으면 scott
+    # DBのID：環境変数 DB_USERNAME、なければ scott
+    username: ${DB_USERNAME:scott}
+    # 비밀번호는 파일에 쓰지 않고 환경변수 DB_PASSWORD에서 읽음
+    # パスワードはファイルに書かず、環境変数 DB_PASSWORD から読む
+    password: ${DB_PASSWORD}
+    # 커넥션 풀 최대 연결 수
+    # コネクションプールの最大接続数
+    hikari:
+      maximum-pool-size: 10
+
+# MyBatis 설정
+# MyBatis設定
+mybatis:
+  # SQL이 들어 있는 매퍼 XML 위치
+  # SQLが入っているマッパーXMLの場所
+  mapper-locations: classpath:mapper/*.xml
+  # DTO 패키지 → XML에서 MemberDTO처럼 짧은 이름으로 쓸 수 있음
+  # DTOパッケージ → XMLで MemberDTO のように短い名前で書ける
+  type-aliases-package: com.board.dto
+
+# 실행되는 SQL을 콘솔에서 보기 (공부용)
+# 実行されるSQLをコンソールで見る（勉強用）
+logging:
+  level:
+    com.board.mapper: DEBUG

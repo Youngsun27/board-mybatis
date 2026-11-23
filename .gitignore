@@ -1,0 +1,17 @@
+# 빌드 결과물 / ビルド成果物
+target/
+
+# IDE 설정 / IDE設定
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+
+# 비밀 정보 (절대 커밋 금지) / 機密情報（絶対にコミット禁止）
+.env*
+!.env.example
+application-secret*.yml
+*.key
+*.pem

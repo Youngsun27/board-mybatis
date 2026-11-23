@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MyBatis 매퍼 문서 형식 선언 (항상 똑같이 씀) -->
+<!-- MyBatisマッパー文書の形式を宣言（いつも同じように書く） -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace = 매퍼 인터페이스 전체 경로 (이 값으로 MemberMapper.java와 연결) -->
+<!-- namespace = マッパーインターフェースのフルパス（この値で MemberMapper.java と接続） -->
+<mapper namespace="com.board.mapper.MemberMapper">
+
+	<!-- 로그인: id = 메서드 이름, #{id} → ? 자리에 값이 안전하게 들어감 (SQL Injection 방지) -->
+	<!-- ログイン：id = メソッド名、#{id} → ? の位置に値が安全に入る（SQLインジェクション防止） -->
+	<select id="getMember" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT id, password, name, role
+		  FROM member
+		 WHERE id = #{id}
+		   AND password = #{password}
+	</select>
+
+</mapper>

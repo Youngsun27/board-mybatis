@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Spring Boot 부모 설정 상속 → 라이브러리 버전을 자동으로 맞춰 줌 -->
+    <!-- Spring Bootの親設定を継承 → ライブラリのバージョンを自動で合わせてくれる -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath/>
+    </parent>
+
+    <!-- 프로젝트 이름 정보 -->
+    <!-- プロジェクトの名前情報 -->
+    <groupId>com.globalin</groupId>
+    <artifactId>biz</artifactId>
+    <version>1.0.0</version>
+    <name>Board-MyBatis</name>
+    <!-- JSP 화면을 쓰므로 war로 묶음 (jar는 JSP를 못 읽음) -->
+    <!-- JSP画面を使うのでwarでまとめる（jarはJSPを読めない） -->
+    <packaging>war</packaging>
+
+    <!-- Java 버전 (Spring Boot 3은 Java 17 이상) -->
+    <!-- Javaのバージョン（Spring Boot 3はJava 17以上） -->
+    <properties>
+        <java.version>17</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- 웹 기능: 내장 톰캣 + 컨트롤러 -->
+        <!-- Web機能：組み込みTomcat + コントローラー -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- JSP 실행기 (내장 톰캣이 .jsp 파일을 읽게 해 줌) -->
+        <!-- JSP実行エンジン（組み込みTomcatが .jsp ファイルを読めるようにする） -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
+
+        <!-- JSTL: JSP에서 c:forEach, c:out 같은 태그 사용 -->
+        <!-- JSTL：JSPで c:forEach、c:out のようなタグを使う -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+        </dependency>
+
+        <!-- MyBatis: 매퍼 XML의 SQL 실행 + HikariCP 커넥션 풀 포함 -->
+        <!-- MyBatis：マッパーXMLのSQLを実行 + HikariCPコネクションプールを含む -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <!-- Oracle JDBC 드라이버 (Oracle 11g 지원 버전) -->
+        <!-- Oracle JDBCドライバ（Oracle 11g対応バージョン） -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>19.24.0.0</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- mvn spring-boot:run 으로 실행할 수 있게 해 줌 -->
+            <!-- mvn spring-boot:run で実行できるようにしてくれる -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

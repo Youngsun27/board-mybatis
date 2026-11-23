@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- MyBatis 매퍼 문서 형식 선언 (항상 똑같이 씀) -->
+<!-- MyBatisマッパー文書の形式を宣言（いつも同じように書く） -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace = BoardMapper.java 전체 경로 (SQL id = 인터페이스 메서드 이름) -->
+<!-- namespace = BoardMapper.java のフルパス（SQL id = インターフェースのメソッド名） -->
+<mapper namespace="com.board.mapper.BoardMapper">
+
+	<!-- 글 목록: 최신 글부터, 등록일은 TO_CHAR로 "2026-11-24" 글자로 바꿈 -->
+	<!-- 投稿一覧：新しい投稿から、登録日は TO_CHAR で "2026-11-24" の文字に変換 -->
+	<select id="getBoardList" resultType="BoardDTO">
+		SELECT seq, title, writer, content,
+		       TO_CHAR(regdate, 'YYYY-MM-DD') AS regDate, cnt
+		  FROM board
+		 ORDER BY seq DESC
+	</select>
+
+	<!-- 글 하나: #{seq} → ? 자리에 글 번호가 안전하게 들어감 -->
+	<!-- 投稿1件：#{seq} → ? の位置に投稿番号が安全に入る -->
+	<select id="getBoard" resultType="BoardDTO">
+		SELECT seq, title, writer, content,
+		       TO_CHAR(regdate, 'YYYY-MM-DD') AS regDate, cnt
+		  FROM board
+		 WHERE seq = #{seq}
+	</select>
+
+	<!-- 글 등록: 새 글 번호 = 가장 큰 번호 + 1 (기존 JDBC 버전과 같은 방식) -->
+	<!-- 投稿登録：新しい投稿番号 = 一番大きい番号 + 1（既存のJDBC版と同じ方式） -->
+	<insert id="insertBoard" parameterType="BoardDTO">
+		INSERT INTO board (seq, title, writer, content)
+		VALUES ((SELECT NVL(MAX(seq), 0) + 1 FROM board), #{title}, #{writer}, #{content})
+	</insert>
+
+	<!-- 글 수정: 제목·내용만 바꿈 (WHERE가 없으면 모든 글이 바뀌니 꼭 씀) -->
+	<!-- 投稿修正：タイトル・内容だけ変更（WHEREがないと全投稿が変わるので必ず書く） -->
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE board
+		   SET title = #{title},
+		       content = #{content}
+		 WHERE seq = #{seq}
+	</update>
+
+	<!-- 글 삭제: 글 번호로 한 줄만 삭제 -->
+	<!-- 投稿削除：投稿番号で1行だけ削除 -->
+	<delete id="deleteBoard">
+		DELETE FROM board
+		 WHERE seq = #{seq}
+	</delete>
+
+</mapper>
